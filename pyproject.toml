@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "z3rno-evals"
-version = "0.3.0"
+version = "0.3.1"
 description = "Eval framework for Z3rno — recall@k, MRR, faithfulness, latency on golden datasets."
 readme = "README.md"
 license = { text = "Apache-2.0" }
