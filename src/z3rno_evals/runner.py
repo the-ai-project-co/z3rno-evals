@@ -23,6 +23,7 @@ from z3rno_evals.judges.base import FaithfulnessJudge, JudgeVerdict
 from z3rno_evals.judges.stub import StubJudge
 from z3rno_evals.metrics import (
     LatencyPercentiles,
+    content_recall_at_k,
     entity_coverage,
     latency_percentiles,
     mrr,
@@ -150,7 +151,15 @@ class EvalRunner:
         budget = item.latency_budget_ms
         within = err is None and (budget is None or latency_ms <= budget)
 
-        recall_score = recall_at_k(retrieved_ids, item.expected_memory_ids, item.top_k)
+        # Prefer content-substring recall when the golden item provides it
+        # (UUID-free; works against any seeded server). Fall back to
+        # ID-based recall for callers that control memo IDs server-side.
+        if item.expected_content_substrings:
+            recall_score = content_recall_at_k(
+                contents, item.expected_content_substrings, item.top_k
+            )
+        else:
+            recall_score = recall_at_k(retrieved_ids, item.expected_memory_ids, item.top_k)
         mrr_score = mrr(retrieved_ids, item.expected_memory_ids)
         joined_context = "\n".join(contents)
         entity_score = entity_coverage(joined_context, item.expected_entities)

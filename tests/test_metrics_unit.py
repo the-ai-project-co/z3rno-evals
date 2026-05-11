@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 
 from z3rno_evals.metrics import (
+    content_recall_at_k,
     entity_coverage,
     latency_percentiles,
     mrr,
@@ -107,3 +108,33 @@ def test_entity_coverage_is_case_insensitive() -> None:
 
 def test_entity_coverage_empty_expected_is_nan() -> None:
     assert math.isnan(entity_coverage("anything", []))
+
+
+# ---------------------------------------------------------------------------
+# content_recall_at_k — UUID-free recall
+# ---------------------------------------------------------------------------
+
+
+def test_content_recall_full_hit() -> None:
+    contents = ["Ada Lovelace works at Anthropic.", "noise"]
+    assert content_recall_at_k(contents, ["Ada", "Anthropic"], 5) == 1.0
+
+
+def test_content_recall_partial_hit() -> None:
+    contents = ["Ada Lovelace works at Google."]
+    assert content_recall_at_k(contents, ["Ada", "Anthropic"], 5) == 0.5
+
+
+def test_content_recall_respects_top_k() -> None:
+    contents = ["unrelated", "unrelated", "Ada"]
+    # k=2 excludes the third row → no hit
+    assert content_recall_at_k(contents, ["Ada"], 2) == 0.0
+    assert content_recall_at_k(contents, ["Ada"], 3) == 1.0
+
+
+def test_content_recall_is_case_insensitive() -> None:
+    assert content_recall_at_k(["ADA LOVELACE"], ["ada"], 5) == 1.0
+
+
+def test_content_recall_empty_expected_is_nan() -> None:
+    assert math.isnan(content_recall_at_k(["x"], [], 5))

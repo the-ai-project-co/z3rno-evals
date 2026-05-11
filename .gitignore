@@ -10,5 +10,8 @@ htmlcov/
 dist/
 build/
 .DS_Store
-results/
+# Ad-hoc local runs go under results/local/; the committed baseline
+# lives directly under results/ so the CI regression gate has a
+# reference point.
+results/local/
 *.tmp.json

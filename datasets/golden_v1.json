@@ -1,15 +1,13 @@
 {
   "version": 1,
   "name": "golden_v1",
-  "description": "Phase E baseline golden dataset — 10 hand-crafted Q&A items covering AUTO, GRAPH, TRIPLET, TEMPORAL, and CODE strategies. Drives the regression gate on every PR.",
+  "description": "Phase E baseline golden dataset. 10 hand-crafted Q&A items spanning every retrieval strategy. UUID-free: the acceptance signal lives in `expected_content_substrings` + `expected_entities` + `expected_answer`, so the harness works against any server seeded via `golden_v1.seed.json`.",
   "items": [
     {
       "id": "q-001",
       "agent_id": "00000000-0000-0000-0000-000000000001",
       "query": "What does the user prefer for notifications?",
-      "expected_memory_ids": [
-        "01HXY00000000000000000PREFS"
-      ],
+      "expected_content_substrings": ["dark mode", "weekly digest"],
       "expected_entities": ["dark mode", "weekly digest"],
       "expected_answer": "The user prefers dark mode and weekly digest emails.",
       "strategy": "AUTO",
@@ -21,9 +19,7 @@
       "id": "q-002",
       "agent_id": "00000000-0000-0000-0000-000000000001",
       "query": "Has the user ever complained about the dashboard?",
-      "expected_memory_ids": [
-        "01HXY00000000000000000COMPL"
-      ],
+      "expected_content_substrings": ["dashboard", "slow"],
       "expected_entities": ["dashboard", "slow"],
       "expected_answer": "Yes — they reported the dashboard was slow on 2026-03-04.",
       "strategy": "LEXICAL",
@@ -35,10 +31,7 @@
       "id": "q-003",
       "agent_id": "00000000-0000-0000-0000-000000000001",
       "query": "Who works at Anthropic in our network?",
-      "expected_memory_ids": [
-        "01HXY00000000000000000ADAA1",
-        "01HXY00000000000000000ANTHR"
-      ],
+      "expected_content_substrings": ["Ada Lovelace", "Anthropic"],
       "expected_entities": ["Anthropic", "Ada"],
       "expected_answer": "Ada Lovelace works at Anthropic.",
       "strategy": "GRAPH",
@@ -50,9 +43,7 @@
       "id": "q-004",
       "agent_id": "00000000-0000-0000-0000-000000000001",
       "query": "Ada Lovelace works at ___?",
-      "expected_memory_ids": [
-        "01HXY00000000000000000ANTHR"
-      ],
+      "expected_content_substrings": ["Anthropic"],
       "expected_entities": ["Anthropic"],
       "expected_answer": "Ada Lovelace works at Anthropic.",
       "strategy": "TRIPLET",
@@ -64,9 +55,7 @@
       "id": "q-005",
       "agent_id": "00000000-0000-0000-0000-000000000001",
       "query": "What was the user's preference last quarter?",
-      "expected_memory_ids": [
-        "01HXY00000000000000000PREFQ"
-      ],
+      "expected_content_substrings": ["light mode"],
       "expected_entities": ["light mode"],
       "expected_answer": "Last quarter the user preferred light mode.",
       "strategy": "TEMPORAL",
@@ -77,12 +66,12 @@
     {
       "id": "q-006",
       "agent_id": "00000000-0000-0000-0000-000000000001",
-      "query": "How many memories do we have tagged 'priority'?",
-      "expected_memory_ids": [],
+      "query": "Memos tagged as priority",
+      "expected_content_substrings": ["priority"],
       "expected_entities": ["priority"],
       "expected_answer": null,
       "strategy": "ASK",
-      "top_k": 1,
+      "top_k": 3,
       "latency_budget_ms": 1000,
       "tags": ["ask", "phase-c", "aggregate"]
     },
@@ -90,9 +79,7 @@
       "id": "q-007",
       "agent_id": "00000000-0000-0000-0000-000000000001",
       "query": "main function in the codegraph",
-      "expected_memory_ids": [
-        "01HXY00000000000000000MAIN1"
-      ],
+      "expected_content_substrings": ["main", "function"],
       "expected_entities": ["main"],
       "expected_answer": "main calls Foo() and Foo.hello().",
       "strategy": "CODE",
@@ -104,9 +91,7 @@
       "id": "q-008",
       "agent_id": "00000000-0000-0000-0000-000000000001",
       "query": "What is the user's name?",
-      "expected_memory_ids": [
-        "01HXY00000000000000000NAME1"
-      ],
+      "expected_content_substrings": ["Vatsal"],
       "expected_entities": ["Vatsal"],
       "expected_answer": "The user's name is Vatsal.",
       "strategy": "AUTO",
@@ -118,9 +103,7 @@
       "id": "q-009",
       "agent_id": "00000000-0000-0000-0000-000000000001",
       "query": "What did the agent decide about pricing?",
-      "expected_memory_ids": [
-        "01HXY00000000000000000DECID"
-      ],
+      "expected_content_substrings": ["pricing", "$99"],
       "expected_entities": ["pricing", "$99"],
       "expected_answer": "The agent decided to price the Pro plan at $99/month.",
       "strategy": "TRACE",
@@ -131,8 +114,8 @@
     {
       "id": "q-010",
       "agent_id": "00000000-0000-0000-0000-000000000001",
-      "query": "Show every memory mentioning machine learning",
-      "expected_memory_ids": [],
+      "query": "memories about machine learning",
+      "expected_content_substrings": ["machine learning"],
       "expected_entities": ["machine learning"],
       "expected_answer": null,
       "strategy": "LEXICAL",

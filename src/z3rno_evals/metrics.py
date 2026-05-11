@@ -9,6 +9,26 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 
+def content_recall_at_k(
+    retrieved_contents: list[str],
+    expected_substrings: list[str] | tuple[str, ...],
+    k: int,
+) -> float:
+    """Fraction of expected substrings present in any of the top-k retrieved contents.
+
+    Case-insensitive substring match. Returns NaN when ``expected_substrings``
+    is empty so aggregates skip the item.
+
+    This is the UUID-free recall: works against any seeded server because the
+    harness doesn't need to know the IDs the server minted.
+    """
+    if not expected_substrings:
+        return float("nan")
+    haystack = "\n".join(c.casefold() for c in retrieved_contents[:k])
+    hits = sum(1 for s in expected_substrings if s.casefold() in haystack)
+    return hits / len(expected_substrings)
+
+
 def recall_at_k(
     retrieved_ids: list[str], expected_ids: list[str] | tuple[str, ...], k: int
 ) -> float:

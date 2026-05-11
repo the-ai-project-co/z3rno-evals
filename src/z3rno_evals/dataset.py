@@ -30,7 +30,19 @@ class GoldenItem(BaseModel):
     query: str = Field(..., min_length=1)
     expected_memory_ids: tuple[str, ...] = Field(
         default=(),
-        description="Memo ids the recall MUST surface. Empty → recall metrics skipped for this item.",
+        description=(
+            "Memo IDs the recall MUST surface. Only useful when callers control "
+            "the IDs (server-side seed). For most callers, prefer "
+            "expected_content_substrings."
+        ),
+    )
+    expected_content_substrings: tuple[str, ...] = Field(
+        default=(),
+        description=(
+            "Strings the harness expects to find inside the top-k Memo contents. "
+            "UUID-free, content-based recall — works against any seeded server. "
+            "Empty AND empty expected_memory_ids → recall@k metric is skipped."
+        ),
     )
     expected_entities: tuple[str, ...] = Field(
         default=(),

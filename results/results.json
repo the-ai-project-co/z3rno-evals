@@ -1,0 +1,192 @@
+{
+  "dataset_name": "golden_v1",
+  "dataset_version": 1,
+  "server_url": "http://127.0.0.1:8000",
+  "summary": {
+    "items_total": 10,
+    "items_within_budget": 5,
+    "mean_recall_at_k": 0.3,
+    "mean_mrr": null,
+    "mean_entity_coverage": 0.3,
+    "mean_faithfulness": 0.375,
+    "latency": {
+      "p50_ms": 16.63,
+      "p95_ms": 19154.79,
+      "p99_ms": 19154.79,
+      "mean_ms": 5000.802857142858,
+      "count": 7
+    }
+  },
+  "items": [
+    {
+      "id": "q-001",
+      "strategy_used": "VECTOR",
+      "retrieved_ids": [
+        "cdb04542-9e61-42a2-a85e-4a0e26cfbe88",
+        "7883d9a1-540f-4c88-8c77-98a8be613c31",
+        "2da16b0e-20f2-4f08-9e5e-e8b74c667c61",
+        "90d11a47-8758-4fc8-ae26-2aa2613261aa",
+        "89d6f3dd-27a7-4126-8acf-18278d672dcd"
+      ],
+      "latency_ms": 15775.09,
+      "recall_at_k": 0.0,
+      "mrr": null,
+      "entity_coverage": 0.0,
+      "faithfulness": {
+        "score": 0.2857142857142857,
+        "rationale": "2/7 expected tokens present in recall"
+      },
+      "within_latency_budget": false,
+      "error": null
+    },
+    {
+      "id": "q-002",
+      "strategy_used": "LEXICAL",
+      "retrieved_ids": [],
+      "latency_ms": 16.63,
+      "recall_at_k": 0.0,
+      "mrr": null,
+      "entity_coverage": 0.0,
+      "faithfulness": {
+        "score": 0.0,
+        "rationale": "0/8 expected tokens present in recall"
+      },
+      "within_latency_budget": true,
+      "error": null
+    },
+    {
+      "id": "q-003",
+      "strategy_used": "GRAPH",
+      "retrieved_ids": [],
+      "latency_ms": 9.63,
+      "recall_at_k": 0.0,
+      "mrr": null,
+      "entity_coverage": 0.0,
+      "faithfulness": {
+        "score": 0.0,
+        "rationale": "0/4 expected tokens present in recall"
+      },
+      "within_latency_budget": true,
+      "error": null
+    },
+    {
+      "id": "q-004",
+      "strategy_used": "TRIPLET",
+      "retrieved_ids": [],
+      "latency_ms": 10.79,
+      "recall_at_k": 0.0,
+      "mrr": null,
+      "entity_coverage": 0.0,
+      "faithfulness": {
+        "score": 0.0,
+        "rationale": "0/4 expected tokens present in recall"
+      },
+      "within_latency_budget": false,
+      "error": "Validation error: strategy 'TRIPLET' requires an LLM gateway, which is not configured on this server"
+    },
+    {
+      "id": "q-005",
+      "strategy_used": "TEMPORAL",
+      "retrieved_ids": [
+        "cdb04542-9e61-42a2-a85e-4a0e26cfbe88",
+        "7883d9a1-540f-4c88-8c77-98a8be613c31",
+        "2da16b0e-20f2-4f08-9e5e-e8b74c667c61"
+      ],
+      "latency_ms": 13.34,
+      "recall_at_k": 1.0,
+      "mrr": null,
+      "entity_coverage": 1.0,
+      "faithfulness": {
+        "score": 1.0,
+        "rationale": "6/6 expected tokens present in recall"
+      },
+      "within_latency_budget": true,
+      "error": null
+    },
+    {
+      "id": "q-006",
+      "strategy_used": "ASK",
+      "retrieved_ids": [],
+      "latency_ms": 7.43,
+      "recall_at_k": 0.0,
+      "mrr": null,
+      "entity_coverage": 0.0,
+      "faithfulness": {
+        "score": null,
+        "rationale": "no expected_answer"
+      },
+      "within_latency_budget": false,
+      "error": "Validation error: strategy 'ASK' requires an LLM gateway, which is not configured on this server"
+    },
+    {
+      "id": "q-007",
+      "strategy_used": "CODE",
+      "retrieved_ids": [],
+      "latency_ms": 57356.63,
+      "recall_at_k": 0.0,
+      "mrr": null,
+      "entity_coverage": 0.0,
+      "faithfulness": {
+        "score": 0.0,
+        "rationale": "0/4 expected tokens present in recall"
+      },
+      "within_latency_budget": false,
+      "error": "Server error: Internal Server Error"
+    },
+    {
+      "id": "q-008",
+      "strategy_used": "VECTOR",
+      "retrieved_ids": [
+        "28fd1fbc-6092-4624-899f-e9b1ac4e92a3",
+        "9d402074-0a5e-46cd-9b36-da8b5b7b58fa",
+        "9e982dd8-e720-4d2f-b139-75a87b111973"
+      ],
+      "latency_ms": 19154.79,
+      "recall_at_k": 1.0,
+      "mrr": null,
+      "entity_coverage": 1.0,
+      "faithfulness": {
+        "score": 1.0,
+        "rationale": "4/4 expected tokens present in recall"
+      },
+      "within_latency_budget": false,
+      "error": null
+    },
+    {
+      "id": "q-009",
+      "strategy_used": "TRACE",
+      "retrieved_ids": [
+        "ab89d8f9-3c2d-47ff-878e-d9612e6a11aa",
+        "28fd1fbc-6092-4624-899f-e9b1ac4e92a3",
+        "9d402074-0a5e-46cd-9b36-da8b5b7b58fa",
+        "9e982dd8-e720-4d2f-b139-75a87b111973",
+        "cdb04542-9e61-42a2-a85e-4a0e26cfbe88"
+      ],
+      "latency_ms": 25.69,
+      "recall_at_k": 1.0,
+      "mrr": null,
+      "entity_coverage": 1.0,
+      "faithfulness": {
+        "score": 0.7142857142857143,
+        "rationale": "5/7 expected tokens present in recall"
+      },
+      "within_latency_budget": true,
+      "error": null
+    },
+    {
+      "id": "q-010",
+      "strategy_used": "LEXICAL",
+      "retrieved_ids": [],
+      "latency_ms": 10.45,
+      "recall_at_k": 0.0,
+      "mrr": null,
+      "entity_coverage": 0.0,
+      "faithfulness": {
+        "score": null,
+        "rationale": "no expected_answer"
+      },
+      "within_latency_budget": true,
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "agent_id": "00000000-0000-0000-0000-000000000001",
+    "content": "The user prefers dark mode and weekly digest emails.",
+    "memory_type": "semantic",
+    "metadata": {"kind": "preference", "seed": "golden_v1", "qid": "q-001"}
+  },
+  {
+    "agent_id": "00000000-0000-0000-0000-000000000001",
+    "content": "Dashboard was slow this morning around 9am UTC on 2026-03-04.",
+    "memory_type": "episodic",
+    "metadata": {"kind": "incident", "seed": "golden_v1", "qid": "q-002"}
+  },
+  {
+    "agent_id": "00000000-0000-0000-0000-000000000001",
+    "content": "Ada Lovelace works at Anthropic as a research scientist.",
+    "memory_type": "semantic",
+    "metadata": {"kind": "person", "seed": "golden_v1", "qid": "q-003"}
+  },
+  {
+    "agent_id": "00000000-0000-0000-0000-000000000001",
+    "content": "Ada Lovelace works at Anthropic.",
+    "memory_type": "semantic",
+    "metadata": {"kind": "triplet", "seed": "golden_v1", "qid": "q-004"}
+  },
+  {
+    "agent_id": "00000000-0000-0000-0000-000000000001",
+    "content": "Last quarter the user preferred light mode for the dashboard.",
+    "memory_type": "semantic",
+    "metadata": {"kind": "historical_preference", "seed": "golden_v1", "qid": "q-005"}
+  },
+  {
+    "agent_id": "00000000-0000-0000-0000-000000000001",
+    "content": "Ticket T-117 is marked priority high. Followups due Friday.",
+    "memory_type": "episodic",
+    "metadata": {"kind": "ticket", "seed": "golden_v1", "qid": "q-006"}
+  },
+  {
+    "agent_id": "00000000-0000-0000-0000-000000000001",
+    "content": "function main in module orders.py at line 14: calls Foo() and Foo.hello().",
+    "memory_type": "semantic",
+    "metadata": {"kind": "codegraph", "seed": "golden_v1", "qid": "q-007"}
+  },
+  {
+    "agent_id": "00000000-0000-0000-0000-000000000001",
+    "content": "The user's name is Vatsal. Prefers a quiet onboarding flow.",
+    "memory_type": "semantic",
+    "metadata": {"kind": "person", "seed": "golden_v1", "qid": "q-008"}
+  },
+  {
+    "agent_id": "00000000-0000-0000-0000-000000000001",
+    "content": "Pricing decision (2026-04-02): the Pro plan is priced at $99/month after analysis of three competitors.",
+    "memory_type": "semantic",
+    "metadata": {"kind": "decision", "seed": "golden_v1", "qid": "q-009"}
+  },
+  {
+    "agent_id": "00000000-0000-0000-0000-000000000001",
+    "content": "Notes on machine learning — supervised vs unsupervised, embedding spaces, retrieval-augmented generation.",
+    "memory_type": "semantic",
+    "metadata": {"kind": "notes", "seed": "golden_v1", "qid": "q-010"}
+  }
+]
