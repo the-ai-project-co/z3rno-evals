@@ -29,6 +29,7 @@ dependencies = [
   "z3rno>=0.3.0",
   "pydantic>=2.10.0",
   "structlog>=24.1.0",
+  "cryptography>=43.0.0",
 ]
 
 [project.optional-dependencies]
@@ -47,6 +48,7 @@ dev = [
 
 [project.scripts]
 z3rno-evals = "z3rno_evals.cli:main"
+z3rno-verify-forget = "z3rno_evals.forget_verify:main"
 
 [project.urls]
 Homepage = "https://z3rno.dev"
