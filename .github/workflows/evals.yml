@@ -1,0 +1,131 @@
+name: evals
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: ghcr.io/the-ai-project-co/z3rno-postgres:17
+        env:
+          POSTGRES_USER: z3rno
+          POSTGRES_PASSWORD: z3rno
+          POSTGRES_DB: z3rno
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U z3rno"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+
+      valkey:
+        image: valkey/valkey:7-alpine
+        ports: [6379:6379]
+        options: >-
+          --health-cmd "valkey-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Checkout z3rno-evals
+        uses: actions/checkout@v4
+
+      - name: Checkout z3rno-server (for the live target)
+        uses: actions/checkout@v4
+        with:
+          repository: the-ai-project-co/z3rno-server
+          path: z3rno-server
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Boot z3rno-server in-process
+        working-directory: z3rno-server
+        env:
+          DATABASE_URL: postgresql+asyncpg://z3rno:z3rno@localhost:5432/z3rno
+          VALKEY_URL: redis://localhost:6379/0
+          Z3RNO_API_KEY: sk-evals-ci-key
+          Z3RNO_DEV_ORG_ID: 00000000-0000-0000-0000-00000000feed
+        run: |
+          uv sync --dev
+          uv run alembic upgrade head
+          uv run uvicorn z3rno_server.main:app --host 0.0.0.0 --port 8000 &
+          for i in {1..30}; do
+            if curl -sf http://localhost:8000/v1/health; then break; fi
+            sleep 1
+          done
+
+      - name: Install z3rno-evals
+        run: uv sync --dev
+
+      - name: Fetch baseline from main
+        id: baseline
+        continue-on-error: true
+        run: |
+          mkdir -p baseline
+          gh api -X GET \
+            repos/${{ github.repository }}/contents/results/results.json \
+            --ref main \
+            -q '.content' | base64 -d > baseline/results.json
+          echo "baseline_path=baseline/results.json" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Seed memories
+        env:
+          Z3RNO_API_KEY: sk-evals-ci-key
+        run: |
+          uv run z3rno-evals seed \
+            --against http://localhost:8000 \
+            --dataset datasets/golden_v1.json || true
+
+      - name: Run evals
+        id: run
+        env:
+          Z3RNO_API_KEY: sk-evals-ci-key
+        run: |
+          uv run z3rno-evals run \
+            --against http://localhost:8000 \
+            --dataset datasets/golden_v1.json \
+            --output results \
+            --baseline "${{ steps.baseline.outputs.baseline_path || '' }}"
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evals-results
+          path: results/
+
+      - name: Post report as PR comment
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = 'results/report.md';
+            if (!fs.existsSync(path)) return;
+            const body = fs.readFileSync(path, 'utf8');
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body,
+            });

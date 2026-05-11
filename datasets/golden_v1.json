@@ -1,0 +1,144 @@
+{
+  "version": 1,
+  "name": "golden_v1",
+  "description": "Phase E baseline golden dataset — 10 hand-crafted Q&A items covering AUTO, GRAPH, TRIPLET, TEMPORAL, and CODE strategies. Drives the regression gate on every PR.",
+  "items": [
+    {
+      "id": "q-001",
+      "agent_id": "00000000-0000-0000-0000-000000000001",
+      "query": "What does the user prefer for notifications?",
+      "expected_memory_ids": [
+        "01HXY00000000000000000PREFS"
+      ],
+      "expected_entities": ["dark mode", "weekly digest"],
+      "expected_answer": "The user prefers dark mode and weekly digest emails.",
+      "strategy": "AUTO",
+      "top_k": 5,
+      "latency_budget_ms": 500,
+      "tags": ["preferences", "auto"]
+    },
+    {
+      "id": "q-002",
+      "agent_id": "00000000-0000-0000-0000-000000000001",
+      "query": "Has the user ever complained about the dashboard?",
+      "expected_memory_ids": [
+        "01HXY00000000000000000COMPL"
+      ],
+      "expected_entities": ["dashboard", "slow"],
+      "expected_answer": "Yes — they reported the dashboard was slow on 2026-03-04.",
+      "strategy": "LEXICAL",
+      "top_k": 5,
+      "latency_budget_ms": 300,
+      "tags": ["incidents", "lexical"]
+    },
+    {
+      "id": "q-003",
+      "agent_id": "00000000-0000-0000-0000-000000000001",
+      "query": "Who works at Anthropic in our network?",
+      "expected_memory_ids": [
+        "01HXY00000000000000000ADAA1",
+        "01HXY00000000000000000ANTHR"
+      ],
+      "expected_entities": ["Anthropic", "Ada"],
+      "expected_answer": "Ada Lovelace works at Anthropic.",
+      "strategy": "GRAPH",
+      "top_k": 5,
+      "latency_budget_ms": 800,
+      "tags": ["graph", "phase-c"]
+    },
+    {
+      "id": "q-004",
+      "agent_id": "00000000-0000-0000-0000-000000000001",
+      "query": "Ada Lovelace works at ___?",
+      "expected_memory_ids": [
+        "01HXY00000000000000000ANTHR"
+      ],
+      "expected_entities": ["Anthropic"],
+      "expected_answer": "Ada Lovelace works at Anthropic.",
+      "strategy": "TRIPLET",
+      "top_k": 3,
+      "latency_budget_ms": 800,
+      "tags": ["triplet", "phase-c"]
+    },
+    {
+      "id": "q-005",
+      "agent_id": "00000000-0000-0000-0000-000000000001",
+      "query": "What was the user's preference last quarter?",
+      "expected_memory_ids": [
+        "01HXY00000000000000000PREFQ"
+      ],
+      "expected_entities": ["light mode"],
+      "expected_answer": "Last quarter the user preferred light mode.",
+      "strategy": "TEMPORAL",
+      "top_k": 3,
+      "latency_budget_ms": 600,
+      "tags": ["temporal", "phase-c"]
+    },
+    {
+      "id": "q-006",
+      "agent_id": "00000000-0000-0000-0000-000000000001",
+      "query": "How many memories do we have tagged 'priority'?",
+      "expected_memory_ids": [],
+      "expected_entities": ["priority"],
+      "expected_answer": null,
+      "strategy": "ASK",
+      "top_k": 1,
+      "latency_budget_ms": 1000,
+      "tags": ["ask", "phase-c", "aggregate"]
+    },
+    {
+      "id": "q-007",
+      "agent_id": "00000000-0000-0000-0000-000000000001",
+      "query": "main function in the codegraph",
+      "expected_memory_ids": [
+        "01HXY00000000000000000MAIN1"
+      ],
+      "expected_entities": ["main"],
+      "expected_answer": "main calls Foo() and Foo.hello().",
+      "strategy": "CODE",
+      "top_k": 5,
+      "latency_budget_ms": 400,
+      "tags": ["code", "phase-d"]
+    },
+    {
+      "id": "q-008",
+      "agent_id": "00000000-0000-0000-0000-000000000001",
+      "query": "What is the user's name?",
+      "expected_memory_ids": [
+        "01HXY00000000000000000NAME1"
+      ],
+      "expected_entities": ["Vatsal"],
+      "expected_answer": "The user's name is Vatsal.",
+      "strategy": "AUTO",
+      "top_k": 3,
+      "latency_budget_ms": 400,
+      "tags": ["preferences", "auto"]
+    },
+    {
+      "id": "q-009",
+      "agent_id": "00000000-0000-0000-0000-000000000001",
+      "query": "What did the agent decide about pricing?",
+      "expected_memory_ids": [
+        "01HXY00000000000000000DECID"
+      ],
+      "expected_entities": ["pricing", "$99"],
+      "expected_answer": "The agent decided to price the Pro plan at $99/month.",
+      "strategy": "TRACE",
+      "top_k": 5,
+      "latency_budget_ms": 1200,
+      "tags": ["trace", "phase-c"]
+    },
+    {
+      "id": "q-010",
+      "agent_id": "00000000-0000-0000-0000-000000000001",
+      "query": "Show every memory mentioning machine learning",
+      "expected_memory_ids": [],
+      "expected_entities": ["machine learning"],
+      "expected_answer": null,
+      "strategy": "LEXICAL",
+      "top_k": 10,
+      "latency_budget_ms": 300,
+      "tags": ["lexical", "phase-c"]
+    }
+  ]
+}

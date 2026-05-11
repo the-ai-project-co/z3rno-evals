@@ -1,0 +1,89 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "z3rno-evals"
+version = "0.1.0"
+description = "Eval framework for Z3rno — recall@k, MRR, faithfulness, latency on golden datasets."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+authors = [
+  { name = "The AI Project Co.", email = "engineering@z3rno.dev" },
+]
+keywords = ["ai-agents", "evals", "memory", "z3rno"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Testing",
+  "Typing :: Typed",
+]
+
+dependencies = [
+  "z3rno>=0.3.0",
+  "pydantic>=2.10.0",
+  "structlog>=24.1.0",
+]
+
+[project.optional-dependencies]
+llm-judge = [
+  "litellm>=1.50.0",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3.0",
+  "pytest-asyncio>=0.24.0",
+  "pytest-cov>=6.0.0",
+  "ruff>=0.8.6",
+  "mypy>=1.13.0",
+]
+
+[project.scripts]
+z3rno-evals = "z3rno_evals.cli:main"
+
+[project.urls]
+Homepage = "https://z3rno.dev"
+Repository = "https://github.com/the-ai-project-co/z3rno-evals"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/z3rno_evals"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP", "N", "S", "A", "T20", "SIM", "RUF", "PT", "PL", "TRY", "PERF"]
+ignore = ["E501", "S101", "PLR0913", "TRY003", "PLR2004", "PLR0915"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101", "S105", "S106", "SIM117"]
+"src/z3rno_evals/cli.py" = ["T201"]  # print() is fine in CLI
+
+[tool.ruff.lint.isort]
+known-first-party = ["z3rno_evals"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = ["litellm", "litellm.*", "z3rno", "z3rno.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
