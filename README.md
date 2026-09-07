@@ -1,5 +1,14 @@
 # z3rno-evals
 
+> ## ⚠️ Deprecated — full rewrite in progress
+>
+> z3rno is being rewritten from the ground up as a single open-source Rust monorepo (Apache 2.0), following direct feedback from enterprise users that the current architecture is too complex.
+>
+> - **Maintenance mode only** — bug fixes, no new features.
+> - Existing installs keep working. Nothing here is being yanked, archived, or removed.
+> - The new monorepo lands at `the-ai-project-co/z3rno`.
+> - Track progress: https://github.com/the-ai-project-co/z3rno-evals/issues/3
+
 <p>
   <a href="https://github.com/the-ai-project-co/z3rno-evals/releases"><img src="https://img.shields.io/github/downloads/the-ai-project-co/z3rno-evals/total" alt="GitHub downloads"></a>
   <a href="https://pepy.tech/project/z3rno-evals"><img src="https://static.pepy.tech/badge/z3rno-evals" alt="PyPI downloads"></a>
