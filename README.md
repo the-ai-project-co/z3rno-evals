@@ -9,6 +9,11 @@
 > - The new monorepo lands at `the-ai-project-co/z3rno`.
 > - Track progress: https://github.com/the-ai-project-co/z3rno-evals/issues/3
 
+<p>
+  <a href="https://github.com/the-ai-project-co/z3rno-evals/releases"><img src="https://img.shields.io/github/downloads/the-ai-project-co/z3rno-evals/total" alt="GitHub downloads"></a>
+  <a href="https://pepy.tech/project/z3rno-evals"><img src="https://static.pepy.tech/badge/z3rno-evals" alt="PyPI downloads"></a>
+</p>
+
 Eval framework for [Z3rno](https://z3rno.dev). Measures the four metrics that gate every Phase E release:
 
 - **recall@k** — fraction of golden questions where an expected Memo is in the top-k results
