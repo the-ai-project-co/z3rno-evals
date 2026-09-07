@@ -1,5 +1,14 @@
 # z3rno-evals
 
+> ## ⚠️ Deprecated — full rewrite in progress
+>
+> z3rno is being rewritten from the ground up as a single open-source Rust monorepo (Apache 2.0), following direct feedback from enterprise users that the current architecture is too complex.
+>
+> - **Maintenance mode only** — bug fixes, no new features.
+> - Existing installs keep working. Nothing here is being yanked, archived, or removed.
+> - The new monorepo lands at `the-ai-project-co/z3rno`.
+> - Track progress: https://github.com/the-ai-project-co/z3rno-evals/issues/3
+
 Eval framework for [Z3rno](https://z3rno.dev). Measures the four metrics that gate every Phase E release:
 
 - **recall@k** — fraction of golden questions where an expected Memo is in the top-k results
